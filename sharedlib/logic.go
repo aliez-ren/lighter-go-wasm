@@ -7,9 +7,6 @@ import (
 
 	"github.com/elliottech/lighter-go/client"
 	"github.com/elliottech/lighter-go/types"
-	curve "github.com/elliottech/poseidon_crypto/curve/ecgfp5"
-	schnorr "github.com/elliottech/poseidon_crypto/signature/schnorr"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 func ensureClient() error {
@@ -26,20 +23,6 @@ func newTransactOpts(nonce int64) *types.TransactOpts {
 		ops.Nonce = &n
 	}
 	return ops
-}
-
-func generateAPIKey(seed string) (privateKey string, publicKey string, err error) {
-	var seedPtr *string
-	if seed != "" {
-		seedPtr = &seed
-	}
-
-	key := curve.SampleScalar(seedPtr)
-
-	publicKey = hexutil.Encode(schnorr.SchnorrPkFromSk(key).ToLittleEndianBytes())
-	privateKey = hexutil.Encode(key.ToLittleEndianBytes())
-
-	return
 }
 
 func createClient(url, privateKey string, chainID uint32, apiKeyIndex uint8, accountIndex int64) error {

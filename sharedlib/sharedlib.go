@@ -42,11 +42,6 @@ func toInt64(v js.Value) int64 {
 	fmt.Sscan(v.String(), &n)
 	return n
 }
-func toUint64(v js.Value) uint64 {
-	var n uint64
-	fmt.Sscan(v.String(), &n)
-	return n
-}
 
 func registerStrFunc(name string, handler func([]js.Value) (string, error)) {
 	js.Global().Set(name, js.FuncOf(func(_ js.Value, args []js.Value) any {
@@ -71,28 +66,7 @@ func registerErrFunc(name string, handler func([]js.Value) error) {
 	}))
 }
 
-func registerAPIKeyFunc() {
-	js.Global().Set("GenerateAPIKey", js.FuncOf(func(_ js.Value, args []js.Value) any {
-		return runJS(func() (interface{}, error) {
-			seed := ""
-			if len(args) > 0 {
-				seed = args[0].String()
-			}
-			privateKey, publicKey, err := generateAPIKey(seed)
-			if err != nil {
-				return nil, err
-			}
-			return map[string]any{
-				"privateKey": privateKey,
-				"publicKey":  publicKey,
-			}, nil
-		})
-	}))
-}
-
 func main() {
-	registerAPIKeyFunc()
-
 	registerErrFunc("CreateClient", func(args []js.Value) error {
 		if err := requireArgs(args, 5); err != nil {
 			return err
