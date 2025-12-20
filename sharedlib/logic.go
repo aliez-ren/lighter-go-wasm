@@ -36,10 +36,6 @@ func createClient(url, privateKey string, chainID uint32, apiKeyIndex uint8, acc
 	}
 
 	txClient = newClient
-	if backupTxClients == nil {
-		backupTxClients = make(map[uint8]*client.TxClient)
-	}
-	backupTxClients[apiKeyIndex] = newClient
 
 	return nil
 }

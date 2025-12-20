@@ -22,21 +22,6 @@ type TransactOpts struct {
 
 type PublicKey = gFp5.Element
 
-type ChangePubKeyReq struct {
-	PubKey [40]byte
-}
-
-type TransferTxReq struct {
-	ToAccountIndex int64
-	USDCAmount     int64
-	Fee            int64
-	Memo           [32]byte
-}
-
-type WithdrawTxReq struct {
-	USDCAmount uint64
-}
-
 type CreateOrderTxReq struct {
 	MarketIndex      int16
 	ClientOrderIndex int64
@@ -50,11 +35,6 @@ type CreateOrderTxReq struct {
 	OrderExpiry      int64
 }
 
-type CreateGroupedOrdersTxReq struct {
-	GroupingType uint8
-	Orders       []*CreateOrderTxReq
-}
-
 type ModifyOrderTxReq struct {
 	MarketIndex  int16
 	Index        int64
@@ -66,34 +46,6 @@ type ModifyOrderTxReq struct {
 type CancelOrderTxReq struct {
 	MarketIndex int16
 	Index       int64
-}
-
-type CancelAllOrdersTxReq struct {
-	TimeInForce uint8
-	Time        int64
-}
-
-type CreatePublicPoolTxReq struct {
-	OperatorFee          int64
-	InitialTotalShares   int64
-	MinOperatorShareRate int64
-}
-
-type UpdatePublicPoolTxReq struct {
-	PublicPoolIndex      int64
-	Status               uint8
-	OperatorFee          int64
-	MinOperatorShareRate int64
-}
-
-type MintSharesTxReq struct {
-	PublicPoolIndex int64
-	ShareAmount     int64
-}
-
-type BurnSharesTxReq struct {
-	PublicPoolIndex int64
-	ShareAmount     int64
 }
 
 type UpdateLeverageTxReq struct {
